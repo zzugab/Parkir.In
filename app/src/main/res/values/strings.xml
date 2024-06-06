@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ParkirIn</string>
+    <string name="greeting1">Parkir.In an ez way to peak a place</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+</resources>
