@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "101133099324",
+    "project_id": "hisstory-3a34b",
+    "storage_bucket": "hisstory-3a34b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:101133099324:android:3a20ed190318bd5f727e39",
+        "android_client_info": {
+          "package_name": "com.sugab.hisstory"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4-1dcOYkfSfE6EznvZYzMKpaDBP5lPDo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:101133099324:android:3a13e2cf534d6161727e39",
+        "android_client_info": {
+          "package_name": "com.sugab.parkirin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4-1dcOYkfSfE6EznvZYzMKpaDBP5lPDo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
