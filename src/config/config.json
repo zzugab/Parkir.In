@@ -1,0 +1,23 @@
+{
+    "development": {
+      "username": "yuda_studying",
+      "password": "kS3f%mOR<X5Y:z,_",
+      "database": "parkir-in-dev",
+      "host": "34.101.211.35",
+      "dialect": "postgres"
+    },
+    "test": {
+      "username": "yuda_studying",
+      "password": "(>UibCB~Di%S+x9U",
+      "database": "parkir-in-test",
+      "host": "34.101.145.57",
+      "dialect": "postgres"
+    },
+    "production": {
+      "username": "yuda_studying",
+      "password": "@IAoEDLU0%'%s@qb",
+      "database": "parkir-in-prod",
+      "host": "34.101.243.206",
+      "dialect": "postgres"
+    }
+}
