@@ -1,2 +1,1 @@
-# Parkir.In
-App Parking Management System
+Parkir Management System App
