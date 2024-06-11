@@ -54,4 +54,10 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    //Firebase firestore
+    implementation (libs.firebase.firestore.ktx) // Check for the latest version
+
+    //ViewPager2
+    implementation (libs.androidx.viewpager2)
 }
