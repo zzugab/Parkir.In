@@ -21,7 +21,7 @@
         android:id="@+id/tv_login"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:text="@string/greeting1"
         android:textSize="18sp"
         android:gravity="center_vertical"
@@ -33,9 +33,9 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_username"
         android:layout_width="300dp"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:layout_marginTop="30dp"
-        android:hint="Username"
+        android:hint="@string/username"
         app:errorEnabled="true"
         app:endIconMode="clear_text"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,9 +53,9 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_email"
         android:layout_width="300dp"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:layout_marginTop="30dp"
-        android:hint="Email"
+        android:hint="@string/email"
         app:errorEnabled="true"
         app:endIconMode="clear_text"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +73,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_password"
         android:layout_width="300dp"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:layout_marginTop="30dp"
         android:hint="@string/password"
         app:errorEnabled="true"
@@ -101,5 +101,28 @@
         app:layout_constraintTop_toBottomOf="@+id/til_password"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_already_have"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="@string/already_have_account"
+        android:textAlignment="center"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="@id/btn_register"
+        app:layout_constraintEnd_toEndOf="@id/btn_register"
+        app:layout_constraintTop_toBottomOf="@+id/btn_register"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,32 +1,13 @@
 {
   "project_info": {
-    "project_number": "101133099324",
-    "project_id": "hisstory-3a34b",
-    "storage_bucket": "hisstory-3a34b.appspot.com"
+    "project_number": "141803554256",
+    "project_id": "parkirin-82176",
+    "storage_bucket": "parkirin-82176.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:101133099324:android:3a20ed190318bd5f727e39",
-        "android_client_info": {
-          "package_name": "com.sugab.hisstory"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyB4-1dcOYkfSfE6EznvZYzMKpaDBP5lPDo"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:101133099324:android:3a13e2cf534d6161727e39",
+        "mobilesdk_app_id": "1:141803554256:android:d57ecb0bb6e2cffebe25d5",
         "android_client_info": {
           "package_name": "com.sugab.parkirin"
         }
@@ -34,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyB4-1dcOYkfSfE6EznvZYzMKpaDBP5lPDo"
+          "current_key": "AIzaSyBLZhLqZ1HIHI9Sfi2-sblnIRsQTvU0DsY"
         }
       ],
       "services": {
