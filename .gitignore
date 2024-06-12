@@ -4,3 +4,9 @@ package-lock.json
 #Service Account
 serviceaccount.json
 parkir-in-firebase-adminsdk.json
+
+authController.js
+authMiddleware.js
+authRoutes.js
+authService.js
+.env
