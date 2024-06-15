@@ -8,8 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.sugab.parkirin.databinding.ActivityLoginBinding
 import com.sugab.parkirin.ui.auth.viewmodel.AuthViewModel
-import com.sugab.parkirin.ui.home.MainActivity
-import com.sugab.parkirin.ui.auth.activity.RegisterActivity
+import com.sugab.parkirin.ui.home.customer.MainActivity
 
 class LoginActivity : AppCompatActivity() {
 

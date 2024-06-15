@@ -5,6 +5,7 @@ plugins {
 }
 
 android {
+
     namespace = "com.sugab.parkirin"
     compileSdk = 34
 
@@ -42,6 +43,8 @@ android {
     }
 }
 
+
+
 dependencies {
 
     implementation(libs.androidx.core.ktx)
@@ -51,6 +54,8 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.firebase.auth)
     implementation(libs.androidx.lifecycle.viewmodel.android)
+    implementation (libs.androidx.lifecycle.viewmodel.ktx)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
