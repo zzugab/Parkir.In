@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.sugab.parkirin.R
 import com.sugab.parkirin.customview.ParkingView
@@ -35,11 +34,11 @@ class HomeFragment : Fragment() {
         parkingView?.floorId = floorId
 
         // Observe changes to the floors data and update the parking view
-        viewModel.floors.observe(viewLifecycleOwner, Observer { floors ->
-            floors?.getOrNull(floorId)?.let { selectedFloor ->
+        viewModel.floors.observe(viewLifecycleOwner) { floors ->
+            floors?.getOrNull(floorId)?.let {
                 parkingView?.invalidate()
             }
-        })
+        }
 
         return rootView
     }

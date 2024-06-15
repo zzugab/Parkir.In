@@ -3,7 +3,6 @@ package com.sugab.parkirin.ui.home.customer
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseAuth
 import com.sugab.parkirin.customview.ParkingViewModel
@@ -34,14 +33,14 @@ class MainActivity : AppCompatActivity() {
             tab.text = "Floor ${position + 1}"
         }.attach()
 
-        viewModel.parkingByName.observe(this, Observer { parking ->
+        viewModel.parkingByName.observe(this) { parking ->
             parking?.let {
                 // Update the UI with parking data
                 binding.tvParkingName.text = it.name
                 binding.tvParkingId.text = it.id.toString()
                 binding.tvPlat.text = it.plat ?: "No Plate"
             }
-        })
+        }
 
         // Simulate getting a parking by name
         displayName?.let {

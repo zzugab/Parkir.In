@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import com.sugab.parkirin.databinding.ActivityLoginBinding
 import com.sugab.parkirin.ui.auth.viewmodel.AuthViewModel
 import com.sugab.parkirin.ui.home.customer.MainActivity
@@ -30,24 +29,24 @@ class LoginActivity : AppCompatActivity() {
             viewModel.login(email, password)
         }
 
-        viewModel.user.observe(this, Observer { user ->
+        viewModel.user.observe(this) { user ->
             if (user != null) {
                 Toast.makeText(this, "Logged In: ${user.displayName}", Toast.LENGTH_SHORT).show()
                 navigateActivity("main")
             }
-        })
+        }
 
         binding.tvDontHave.setOnClickListener {
             navigateActivity("reg")
         }
 
-        viewModel.error.observe(this, Observer { error ->
+        viewModel.error.observe(this) { error ->
             if (error != null) {
                 Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
                 // Sembunyikan ProgressBar jika terjadi kesalahan pada login
                 showProgressBar(false)
             }
-        })
+        }
     }
 
     private fun showProgressBar(show: Boolean) {
