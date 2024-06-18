@@ -14,7 +14,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Read a user by ID
+// Read a user by UID
 router.get('/:uid', async (req, res) => {
   try {
     const uid = req.params.uid;
@@ -30,7 +30,7 @@ router.get('/:uid', async (req, res) => {
   }
 });
 
-// Update a user by ID
+// Update a user by UID
 router.put('/:uid', async (req, res) => {
   try {
     const uid = req.params.uid;
@@ -43,7 +43,7 @@ router.put('/:uid', async (req, res) => {
   }
 });
 
-// Delete a user by ID
+// Delete a user by UID
 router.delete('/:uid', async (req, res) => {
   try {
     const uid = req.params.uid;
