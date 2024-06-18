@@ -50,13 +50,11 @@ router.put('/:parkingId/field', async (req, res) => {
   try {
     const floorId = req.params.floorId;
     const parkingId = req.params.parkingId;
-    const fieldToUpdate = req.body.field; // Nama field yang akan diupdate
-    const newValue = req.body.value; // Nilai baru untuk field tersebut
+    const fieldToUpdate = req.body.field;
+    const newValue = req.body.value;
 
-    // Path ke field yang ingin diupdate
     const docRef = firestore.collection('floors').doc(floorId).collection('parkingList').doc(parkingId);
 
-    // Menggunakan dot notation untuk mengupdate field spesifik
     const updateData = {};
     updateData[fieldToUpdate] = newValue;
 
