@@ -13,7 +13,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Read a document from 'floors'
+// Read a document from floors
 router.get('/:id', async (req, res) => {
   try {
     const docRef = firestore.collection('floors').doc(req.params.id);
@@ -28,7 +28,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Update a document in 'floors'
+// Update a document in floors
 router.put('/:id', async (req, res) => {
   try {
     const data = req.body;
