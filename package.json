@@ -23,7 +23,7 @@
   "keywords": [],
   "author": "Driann",
   "license": "ISC",
-  "description": "Backend for Parkir.In project",
+  "description": "Backend for Parkir.In capstone project",
   "devDependencies": {
     "nodemon": "^3.1.3"
   }
