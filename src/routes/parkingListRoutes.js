@@ -66,7 +66,7 @@ router.put('/:parkingId/field', async (req, res) => {
   }
 });
 
-// Delete a document from 'parkingList' subcollection
+// Delete a document from parkingList subcollection
 router.delete('/:parkingId', async (req, res) => {
   try {
     const floorId = req.params.floorId;
