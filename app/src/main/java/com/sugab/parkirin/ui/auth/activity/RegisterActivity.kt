@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.sugab.parkirin.databinding.ActivityRegisterBinding
 import com.sugab.parkirin.ui.auth.viewmodel.AuthViewModel
 
@@ -22,32 +23,28 @@ class RegisterActivity : AppCompatActivity() {
             val email = binding.etEmail.text.toString()
             val password = binding.etPassword.text.toString()
             val displayName = binding.etUsername.text.toString()
+            val role = "customer" // Set default role for registration
 
-            // Menampilkan ProgressBar saat proses registrasi dimulai
-            showProgressBar(true)
-
-            viewModel.register(email, password, displayName)
+            viewModel.register(email, password, displayName, role)
         }
 
         binding.tvAlreadyHave.setOnClickListener {
             navigateToLogin()
         }
 
-        viewModel.user.observe(this) { user ->
-            if (user != null) {
-                Toast.makeText(this, "Registered as: ${user.email}", Toast.LENGTH_SHORT).show()
-                // Sembunyikan ProgressBar setelah registrasi berhasil
-                showProgressBar(false)
+        viewModel.error.observe(this, Observer { error ->
+            error?.let {
+                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
             }
-        }
+        })
 
-        viewModel.error.observe(this) { error ->
-            if (error != null) {
-                Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
-                // Sembunyikan ProgressBar jika terjadi kesalahan pada registrasi
+        viewModel.user.observe(this, Observer { user ->
+            user?.let {
+                Toast.makeText(this, "Registration successful", Toast.LENGTH_SHORT).show()
                 showProgressBar(false)
+                navigateToLogin()
             }
-        }
+        })
     }
 
     private fun showProgressBar(show: Boolean) {
@@ -57,6 +54,6 @@ class RegisterActivity : AppCompatActivity() {
     private fun navigateToLogin() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
-        finish() // Menutup LoginActivity agar tidak kembali ke login saat tombol back ditekan
+        finish()
     }
 }
