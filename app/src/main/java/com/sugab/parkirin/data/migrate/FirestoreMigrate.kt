@@ -4,11 +4,12 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.sugab.parkirin.data.parking.Floor
 import com.sugab.parkirin.data.parking.Parking
+import com.sugab.parkirin.data.valet.ValetEmployee
 
 //Kelas buat migrate data ke firestore, aku pakainya cuman sekali, habis itu ngga
 class FirestoreMigrate(private val db: FirebaseFirestore) {
 
-    fun migrateData() {
+    fun migrateDataFloorAndParking() {
         // Data untuk setiap lantai
         val floors = listOf(
             Floor(
@@ -34,8 +35,6 @@ class FirestoreMigrate(private val db: FirebaseFirestore) {
             val parkingList = floor.parkingList.map { parking ->
                 hashMapOf(
                     "id" to parking.id,
-                    "x" to parking.x,
-                    "y" to parking.y,
                     "name" to parking.name,
                     "isPlaced" to parking.isPlaced,
                     "plat" to parking.plat,
@@ -68,8 +67,6 @@ class FirestoreMigrate(private val db: FirebaseFirestore) {
         return (1..20).map { index ->
             Parking(
                 id = (floorId - 1) * 20 + index,
-                x = 0F,
-                y = 0F,
                 total = 0,
                 plat = "",
                 name = "$label$index",
@@ -79,5 +76,44 @@ class FirestoreMigrate(private val db: FirebaseFirestore) {
                 endTime = Timestamp.now()
             )
         }
+    }
+
+    // Migrate emoplyee valet
+    fun migrateValetEmployee() {
+        // Data untuk setiap karyawan valet
+        val valetEmployees = createValetEmployee()
+
+        // Iterasi melalui setiap karyawan valet dan mengunggahnya ke Firestore
+        valetEmployees.forEach { employee ->
+            // Koleksi 'valetEmployees', dokumen dengan id berdasarkan employee.id
+            val valetEmployeeDocRef = db.collection("valetEmployees").document(employee.id.toString())
+
+            // Data yang akan di-upload ke Firestore
+            val employeeData = hashMapOf(
+                "id" to employee.id,
+                "name" to employee.name,
+                "isReady" to employee.isReady
+            )
+
+            // Upload data ke Firestore
+            valetEmployeeDocRef.set(employeeData)
+                .addOnSuccessListener {
+                    println("Data karyawan valet ${employee.name} berhasil diupload")
+                }
+                .addOnFailureListener { e ->
+                    println("Gagal mengupload data karyawan valet ${employee.name}: $e")
+                }
+        }
+    }
+
+    // Data Valet Employee
+    private fun createValetEmployee(): List<ValetEmployee> {
+        return listOf(
+            ValetEmployee(id = 1, name = "Pudge", isReady = true),
+            ValetEmployee(id = 2, name = "Juggernaut", isReady = true),
+            ValetEmployee(id = 3, name = "Invoker", isReady = true),
+            ValetEmployee(id = 4, name = "Omni", isReady = true),
+            ValetEmployee(id = 5, name = "Oman", isReady = true)
+        )
     }
 }

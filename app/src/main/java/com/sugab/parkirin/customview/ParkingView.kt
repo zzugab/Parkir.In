@@ -18,8 +18,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.sugab.parkirin.R
 import com.sugab.parkirin.data.parking.Parking
+import com.sugab.parkirin.data.valet.Valet
+import com.sugab.parkirin.data.valet.ValetEmployee
+import com.sugab.parkirin.ui.auth.viewmodel.AuthViewModel
 
 class ParkingView : View {
     constructor(context: Context) : super(context)
@@ -31,12 +35,22 @@ class ParkingView : View {
         attrs,
         defStyleAttr
     )
+
     var floorId: Int = 0
     var selectedParkingId: Int? = null
+    private val db = FirebaseFirestore.getInstance()
+    private var editedParking: Parking? = null
+    private lateinit var auth: FirebaseAuth
+
 
     private val viewModel by lazy {
         ViewModelProvider(context as ViewModelStoreOwner).get(ParkingViewModel::class.java)
     }
+
+    private val viewModel2 by lazy {
+        ViewModelProvider(context as ViewModelStoreOwner).get(AuthViewModel::class.java)
+    }
+
 
     init {
         // Observing the floors data
@@ -64,8 +78,6 @@ class ParkingView : View {
     private val wheelPaint = Paint()
     private val spoilerPaint = Paint()
     private val numberParkingPaint = Paint(Paint.FAKE_BOLD_TEXT_FLAG)
-    private var editedParking: Parking? = null
-    private lateinit var auth: FirebaseAuth
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
@@ -80,7 +92,7 @@ class ParkingView : View {
         val verticalSpacing = 50f
         val totalWidth = columnCount * parkingWidth + (columnCount - 1) * horizontalSpacing
         val startX = (width - totalWidth) / 2
-        val startY = 50f
+        val startY = 35f
 
         var rowIndex = 0
         var columnIndex = 0
@@ -136,8 +148,8 @@ class ParkingView : View {
 
         val text: String = when (floorId) {
             0 -> "A${parking.id}"
-            1 -> "B${parking.id}"
-            2 -> "C${parking.id}"
+            1 -> "B${parking.id - 20}"
+            2 -> "C${parking.id - 40}"
             else -> "Lantai tidak ditemukan"
         }
 
@@ -166,18 +178,110 @@ class ParkingView : View {
             .setPositiveButton("OK") { _, _ ->
                 val plateNumber = editText.text.toString()
                 parking.plat = plateNumber
+                viewModel2.role
                 parking.namePlaced = displayName ?: ""
                 parking.isPlaced = true
                 parking.startTime = Timestamp.now()
-
                 viewModel.updateParking(floorId, parking)
                 invalidate()
+                // check valet employee ada yang ready atau tidak
+                db.collection("valetEmployees").whereEqualTo("isReady", true).get()
+                    .addOnSuccessListener { result ->
+                        if (!result.isEmpty) {
+                            // Jika ada karyawan valet yang tersedia, tampilkan dialog untuk memilih
+                            showValetServiceDialog(
+                                context,
+                                parking,
+                                plateNumber,
+                                currentUser!!.uid
+                            )
+                        }
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(
+                            context,
+                            "Gagal mendapatkan data karyawan valet",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
             }
             .setNegativeButton("Batal") { dialog, _ ->
                 cancelParkingEdit()
                 dialog.dismiss()
             }
             .show()
+    }
+
+    private fun showValetServiceDialog(
+        context: Context,
+        parking: Parking,
+        plateNumber: String,
+        userId: String
+    ) {
+        AlertDialog.Builder(context)
+            .setTitle("Apakah Anda ingin menggunakan jasa valet?")
+            .setPositiveButton("Ya") { _, _ ->
+                selectValetEmployee(context, parking, plateNumber, userId)
+            }
+            .setNegativeButton("Tidak") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    private fun selectValetEmployee(
+        context: Context,
+        parking: Parking,
+        plateNumber: String,
+        userId: String
+    ) {
+        // Mendapatkan karyawan valet yang siap
+        db.collection("valetEmployees").whereEqualTo("isReady", true).get()
+            .addOnSuccessListener { result ->
+                val valetEmployees = result.toObjects(ValetEmployee::class.java)
+                val employeeNames = valetEmployees.map { it.name }.toTypedArray()
+                val employeeIds = valetEmployees.map { it.id }
+
+                AlertDialog.Builder(context)
+                    .setTitle("Pilih Karyawan Valet")
+                    .setItems(employeeNames) { _, which ->
+                        val selectedEmployeeId = employeeIds[which]
+                        createValetService(parking.id, userId, selectedEmployeeId, plateNumber)
+                    }
+                    .show()
+
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "Gagal mendapatkan data karyawan valet", Toast.LENGTH_SHORT)
+                    .show()
+            }
+    }
+
+    private fun createValetService(
+        parkingId: Int,
+        userId: String,
+        employeeId: Int,
+        plateNumber: String
+    ) {
+        val valet = Valet(
+            id = "",
+            parkingId = parkingId,
+            userId = userId,
+            employeeId = employeeId,
+            plat = plateNumber,
+            isParked = false
+        )
+
+        db.collection("valet").add(valet)
+            .addOnSuccessListener { documentReference ->
+                db.collection("valet").document(documentReference.id)
+                    .update("id", documentReference.id)
+                db.collection("valetEmployees").document(employeeId.toString())
+                    .update("isReady", false)
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "Gagal membuat jasa valet", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun cancelParkingEdit() {
@@ -235,3 +339,5 @@ class ParkingView : View {
         return null
     }
 }
+
+//Aku ikuti alurmu, aku sangat senang sekali kau jadikan aku budak document dan penikmat gpt :)

@@ -15,4 +15,11 @@
     <string name="parking_id">Parking id</string>
     <string name="display_name">Display Name</string>
     <string name="plat">Plat</string>
+    <string name="start_time">Start Time</string>
+    <string name="valet">Valet</string>
+    <string name="valet_check">Valet Check</string>
+    <string name="valet_card">Valet Card</string>
+    <string name="parkirin">Parkir.In</string>
+    <string name="checkout">Checkout</string>
+    <string name="choose_image">Choose Image</string>
 </resources>

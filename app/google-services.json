@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "141803554256",
-    "project_id": "parkirin-82176",
-    "storage_bucket": "parkirin-82176.appspot.com"
+    "project_number": "709940956519",
+    "project_id": "elite-buttress-422612-j5",
+    "storage_bucket": "elite-buttress-422612-j5.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:141803554256:android:d57ecb0bb6e2cffebe25d5",
+        "mobilesdk_app_id": "1:709940956519:android:eae1f8b9f269e2f4aab3c2",
         "android_client_info": {
           "package_name": "com.sugab.parkirin"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBLZhLqZ1HIHI9Sfi2-sblnIRsQTvU0DsY"
+          "current_key": "AIzaSyAYkCyTtc1Prsxitk9x7PQ3CXLVhSl1vi4"
         }
       ],
       "services": {

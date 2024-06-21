@@ -58,16 +58,37 @@ class ParkingViewModel : ViewModel() {
         return floor?.parkingList?.find { it.id == parkingId }
     }
 
-    fun getParkingByName(name:  String) {
-        _floors.value?.forEach { floor ->
-            floor.parkingList.forEach { parking ->
-                if (parking.namePlaced == name) {
-                    _parkingByName.value = parking
-                    return
+    fun getParkingByName(name: String) {
+        db.collection("floors")
+            .get()
+            .addOnSuccessListener { result ->
+                var foundParking: Parking? = null
+                for (document in result) {
+                    val parkingList = document.get("parkingList") as? List<Map<String, Any>>
+                    parkingList?.forEach { map ->
+                        val parking = Parking(
+                            id = (map["id"] as? Long)?.toInt() ?: 0,
+                            name = map["name"] as? String ?: "",
+                            isPlaced = map["isPlaced"] as? Boolean ?: false,
+                            plat = map["plat"] as? String,
+                            startTime = map["startTime"] as? Timestamp,
+                            total = (map["total"] as? Long)?.toInt() ?: 0,
+                            endTime = map["endTime"] as? Timestamp,
+                            namePlaced = map["namePlaced"] as? String ?: ""
+                        )
+                        if (parking.namePlaced == name) {
+                            foundParking = parking
+                            return@forEach
+                        }
+                    }
+                    if (foundParking != null) break
                 }
+                _parkingByName.value = foundParking
             }
-        }
-        _parkingByName.value = null
+            .addOnFailureListener { exception ->
+                Log.e("ParkingViewModel", "Error fetching data: ", exception)
+                _parkingByName.value = null
+            }
     }
 
     fun updateParking(floorId: Int, parking: Parking) {
@@ -116,6 +137,49 @@ class ParkingViewModel : ViewModel() {
             }
             .addOnFailureListener { e ->
                 Log.e("ParkingViewModel", "Error updating parking data", e)
+            }
+    }
+
+    private val _parkingByPlate = MutableLiveData<Parking?>()
+    val parkingByPlate: LiveData<Parking?> = _parkingByPlate
+
+    fun getParkingByPlate(plateNumber: String) {
+        db.collection("floors")
+            .get()
+            .addOnSuccessListener { result ->
+                var foundParking: Parking? = null
+
+                for (document in result) {
+                    val parkingList = document.get("parkingList") as? List<Map<String, Any>>
+                    parkingList?.forEach { map ->
+                        val parking = Parking(
+                            id = (map["id"] as? Long)?.toInt() ?: 0,
+                            name = map["name"] as? String ?: "",
+                            isPlaced = map["isPlaced"] as? Boolean ?: false,
+                            plat = map["plat"] as? String,
+                            startTime = map["startTime"] as? Timestamp,
+                            total = (map["total"] as? Long)?.toInt() ?: 0,
+                            endTime = map["endTime"] as? Timestamp,
+                            namePlaced = map["namePlaced"] as? String ?: ""
+                        )
+
+                        // Check if the parking's plate number matches the recognized plate number
+                        if (parking.plat == plateNumber) {
+                            foundParking = parking
+                            return@forEach
+                        }
+                    }
+
+                    if (foundParking != null) {
+                        break
+                    }
+                }
+
+                _parkingByPlate.value = foundParking
+            }
+            .addOnFailureListener { exception ->
+                Log.e("ParkingViewModel", "Error fetching data: ", exception)
+                _parkingByPlate.value = null
             }
     }
 }

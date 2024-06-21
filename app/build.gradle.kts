@@ -62,7 +62,26 @@ dependencies {
 
     //Firebase firestore
     implementation (libs.firebase.firestore.ktx) // Check for the latest version
+    implementation(libs.firebase.bom)
+
 
     //ViewPager2
     implementation (libs.androidx.viewpager2)
+
+    //Coroutine
+    implementation (libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.coroutines.core)
+
+
+    //Fragment
+    implementation (libs.androidx.fragment.ktx)
+
+    //Recyclerview
+    implementation (libs.androidx.recyclerview) // Update version if needed
+
+    //Ml Kit
+    implementation(libs.text.recognition)
 }
+// Apply the Google services Gradle plugin
+apply(plugin = "com.google.gms.google-services")
+
